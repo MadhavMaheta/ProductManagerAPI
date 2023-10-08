@@ -1,0 +1,64 @@
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/auth",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/auth",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7034
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/User/GetUser/{nUserId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/User/GetUser/{nUserId}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7034
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/User/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "PATCH", "GET", "DELETE" ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/User/{everything}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7034
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Products/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7241
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Products/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Orders/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7284
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Orders/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+    }
+  ]
+}
