@@ -47,7 +47,8 @@ namespace ProductManagerAPI.Controllers
                 return list;
             }
             else {
-                return JsonConvert.DeserializeObject<List<Product>>(value.ToString());
+                List<Product> data = JsonConvert.DeserializeObject<List<Product>>(value.ToString());
+                return data;
             }
         }
 

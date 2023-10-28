@@ -38,11 +38,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/Products/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7241
+          "Port": 5241
         }
       ],
       "UpstreamPathTemplate": "/api/Products/{everything}",
