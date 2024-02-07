@@ -28,7 +28,7 @@ namespace ProductManagerAPI.Controllers
 
         // GET: api/Products
         [HttpGet]
-        [Helper.Authorize("Admin")]
+        [Helper.Authorize("Admin")] 
         public List<Product> GetProducts()
         {
             return  _productService.GetProducts();
