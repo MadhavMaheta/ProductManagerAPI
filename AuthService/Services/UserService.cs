@@ -26,13 +26,32 @@ namespace AuthService.Services
         {
             return _context.User.Where(x => x.Name == username && x.Password == Encryption.EncryptString(_config.GetSection("EncryptionKey").Value, password)).FirstOrDefault();
         }
+
         public User GetUser(int nUserId)
         {
             return _context.User.Where(x => x.Id == nUserId).FirstOrDefault();
         }
 
+        public User GetUserByEmailId(string emailId)
+        {
+            try
+            {
+                return _context.User.FirstOrDefault(x => x.Email == emailId);
+            }
+            catch(Exception ex) 
+            {
+                throw ex; 
+            }
+        }
+
         public bool RegisterUser(User user)
         {
+            if (_context.User.Any(x => x.Email == user.Email))
+            {
+                return false;
+            }
+
+            user.Password = Encryption.EncryptString(_config.GetSection("EncryptionKey").Value, user.Password);
             _context.User.Add(user);
             _context.SaveChanges();
             return true;
@@ -47,7 +66,6 @@ namespace AuthService.Services
             }
             objCurrentUser.Name = user.Name;
             objCurrentUser.Email = user.Email;
-            objCurrentUser.Password = Encryption.EncryptString(_config.GetSection("EncryptionKey").Value, user.Password);
             _context.User.Update(user);
             _context.SaveChanges();
             return true;
@@ -68,14 +86,6 @@ namespace AuthService.Services
                 throw new Exception("User not found");
             }
         }
-
-        //public void GetPasswordSetMail(string sUserEmail) {
-        //    User objUser = _context.User.Where(x => x.Email == sUserEmail).FirstOrDefault();
-        //    if(objUser != null)
-        //    {
-
-        //    }
-        //}
 
         public List<User> GetUserList()
         {

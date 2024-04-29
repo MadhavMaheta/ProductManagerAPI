@@ -12,18 +12,18 @@
         }
       ]
     },
-    {
-      "UpstreamPathTemplate": "/User/GetUser/{nUserId}",
-      "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamScheme": "https",
-      "DownstreamPathTemplate": "/api/User/GetUser/{nUserId}",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7034
-        }
-      ]
-    },
+    //{
+    //  "UpstreamPathTemplate": "/User/GetUser/{nUserId}",
+    //  "UpstreamHttpMethod": [ "GET" ],
+    //  "DownstreamScheme": "https",
+    //  "DownstreamPathTemplate": "/api/User/GetUser/{nUserId}",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 7034
+    //    }
+    //  ]
+    //},
     {
       "UpstreamPathTemplate": "/User/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "PATCH", "GET", "DELETE" ],

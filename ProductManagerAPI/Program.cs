@@ -47,9 +47,9 @@ builder.Services.Add(new ServiceDescriptor(typeof(IProductService), typeof(Produ
 //builder.Services.AddHostedService(provider =>
 //                   new RabbitMQConsumerService("decreaseQuantityQueue", "a", "b", "c", provider.GetService<IServiceProvider>()));
 
-builder.Services.AddHostedService<RabbitMQConsumerService>();
+//builder.Services.AddHostedService<RabbitMQConsumerService>();
 
-var app = builder.Build();
+var app = builder.Build(); 
 
 app.UseMiddleware(typeof(ExceptionMiddleware));
 app.UseAuthentication();

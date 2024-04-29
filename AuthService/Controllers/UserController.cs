@@ -11,14 +11,13 @@ namespace AuthService.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IConfiguration _config;
         public IUserService _userService { get; set; }
+
         private readonly IMapper _mapper;
 
         public UserController(IUserService userService, IConfiguration config, IMapper mapper)
         {
             _userService = userService;
-            _config = config;
             _mapper = mapper;
         }
 
@@ -26,8 +25,12 @@ namespace AuthService.Controllers
         public IActionResult RegisterUser(User objUser)
         {
             ModelState.Remove("Id");
+
             if (ModelState.IsValid)
             {
+                if(_userService.GetUserByEmailId(objUser.Email) != null)
+                    return BadRequest("User with same email already exist");
+
                 if (_userService.RegisterUser(objUser))
                 {
                     return Ok(objUser);
@@ -44,7 +47,7 @@ namespace AuthService.Controllers
         }
 
         [HttpPatch]
-        [Authorize("Admin","Customer")]
+        [Authorize("Admin", "Customer")]
         public IActionResult UpdateUser(User objUser)
         {
             if (ModelState.IsValid)
@@ -85,9 +88,8 @@ namespace AuthService.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("{nUserId}")]
         [Authorize("Admin", "Customer")]
-        [Route("~/api/User/GetUser/{nUserId}")]
         public IActionResult GetUser(int nUserId)
         {
             User objUser = _userService.GetUser(nUserId);

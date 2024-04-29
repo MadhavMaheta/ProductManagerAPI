@@ -26,33 +26,43 @@ namespace ProductManagerAPI.Controllers
             _connectionMultiplexer = connectionMultiplexer;
         }
 
-        // GET: api/Products
         [HttpGet]
-        [Helper.Authorize("Admin")] 
+        [Helper.Authorize("Admin")]
         public List<Product> GetProducts()
         {
-            return  _productService.GetProducts();
+            return _productService.GetProducts();
         }
 
         [HttpGet]
         public List<Product> GetHomePageProducts()
         {
             var db = _connectionMultiplexer.GetDatabase();
-            var value  =db.StringGet("HomePage");
+            var value = db.StringGet("HomePage");
 
+            List<Product> list = new List<Product>();
             if (value.IsNull)
             {
-                List<Product> list = _context.Product.ToList();
-                db.StringSet("HomePage", JsonConvert.SerializeObject(list),TimeSpan.FromDays(1));
-                return list;
+                list = _context.Product.ToList();
+                db.StringSet("HomePage", JsonConvert.SerializeObject(list), TimeSpan.FromDays(1));
             }
-            else {
-                List<Product> data = JsonConvert.DeserializeObject<List<Product>>(value.ToString());
-                return data;
+            else
+            {
+                list = JsonConvert.DeserializeObject<List<Product>>(value.ToString());
             }
+
+            if(list.Count > 0)
+            {
+                foreach (var item in list)
+                {
+                    if (!string.IsNullOrEmpty(item.ImageName))
+                        item.ImageData = System.IO.File.ReadAllBytes(_environment.WebRootPath + "\\Images\\" + item.ImageName);
+                }
+
+            }
+
+            return list;
         }
 
-        // GET: api/Products/5
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<Product>> GetProduct(long id)
@@ -92,8 +102,6 @@ namespace ProductManagerAPI.Controllers
             return product;
         }
 
-        // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> PutProduct(long id, Product product)
@@ -124,8 +132,6 @@ namespace ProductManagerAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<Product>> PostProduct(Product product)
@@ -168,7 +174,6 @@ namespace ProductManagerAPI.Controllers
             }
         }
 
-        // DELETE: api/Products/5
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteProduct(long id)
@@ -187,17 +192,18 @@ namespace ProductManagerAPI.Controllers
 
         [Authorize]
         [HttpPost]
-        public bool CheckProductStock(List<ProductQuantity> lstProducts) {
+        public bool CheckProductStock(List<ProductQuantity> lstProducts)
+        {
 
-            foreach(var prod in lstProducts)
+            foreach (var prod in lstProducts)
             {
-                int quantity = _context.Product.Where(x => x.Id == prod.ProductId).Select(x=>x.Quantity).FirstOrDefault();
+                int quantity = _context.Product.Where(x => x.Id == prod.ProductId).Select(x => x.Quantity).FirstOrDefault();
 
-                if(quantity < prod.Quantity)
+                if (quantity < prod.Quantity)
                     return false;
             }
 
-            return true;  
+            return true;
         }
 
         [Authorize]

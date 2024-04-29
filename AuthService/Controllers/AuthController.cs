@@ -43,8 +43,6 @@ namespace AuthService.Controllers
         [NonAction]
         private LoginRespone PreparejwtToken(LoginModel model, string userRole, string refreshToken = null)
         {
-            string[] permissions = null;
-            var response = new LoginRespone();
             var jti = Guid.NewGuid().ToString();
 
             IdentityOptions _options = new IdentityOptions();
@@ -67,7 +65,7 @@ namespace AuthService.Controllers
                 );
 
             var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
-            response = new LoginRespone()
+            LoginRespone response = new LoginRespone()
             {
                 UserFirstName = model.Username,
                 JwtToken = token,

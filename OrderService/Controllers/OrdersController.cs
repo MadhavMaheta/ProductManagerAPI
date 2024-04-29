@@ -1,15 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OrderService.Helper;
 using OrderService.Models;
 using OrderService.Services;
 using RabbitMQ.Client;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Text;
-using System.Text.Json;
 
 namespace OrderService.Controllers
 {
@@ -18,6 +14,8 @@ namespace OrderService.Controllers
     public class OrdersController : ControllerBase
     {
         public IUserOrderService _userOrderService { get; set; }
+        private IModel _channel;
+        private IConnection _connection;
         public OrdersController(IUserOrderService userOrderService)
         {
             _userOrderService = userOrderService;
@@ -33,26 +31,42 @@ namespace OrderService.Controllers
                 throw new Exception("Stock is not available");
             }
 
-            var factory = new ConnectionFactory() { HostName  = "localhost" };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(queue: "decreaseQuantityQueue",
-                                     durable: true,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
+            string message = JsonConvert.SerializeObject(order.OrderItems.Select(x => new ProductQuantity { ProductId = x.ProductId, Quantity = x.Quantity }).ToList());
+            var body = Encoding.UTF8.GetBytes(message);
 
-                string message = JsonConvert.SerializeObject(order.OrderItems.Select(x => new ProductQuantity { ProductId = x.ProductId, Quantity = x.Quantity }).ToList());
-                var body = Encoding.UTF8.GetBytes(message);
+            var factory = new ConnectionFactory { HostName = "localhost" };
+            _connection = factory.CreateConnection();
+            _channel = _connection.CreateModel();
 
-                channel.BasicPublish(exchange: "",
-                                     routingKey: "decreaseQuantityQueue",
-                                     basicProperties: null,
-                                     body: body);
-            }
+            string queueName = "myQueue";  // Replace with your queue name
+            _channel.QueueDeclare(queue: "decreaseQuantityQueue", durable: false, exclusive: false, autoDelete: false, arguments: null);
+            _channel.BasicPublish(exchange: "",
+                                 routingKey: "decreaseQuantityQueue",
+                                 basicProperties: null,
+                                 body: body);
 
-            //_userOrderService.CreateOrder(order);
+            //_connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
+
+            //var factory = new ConnectionFactory() { HostName  = "localhost" };
+            //using (var connection = factory.CreateConnection())
+            //using (var channel = connection.CreateModel())
+            //{
+            //    channel.QueueDeclare(queue: "decreaseQuantityQueue",
+            //                         durable: true,
+            //                         exclusive: false,
+            //                         autoDelete: false,
+            //                         arguments: null);
+
+            //    string message = JsonConvert.SerializeObject(order.OrderItems.Select(x => new ProductQuantity { ProductId = x.ProductId, Quantity = x.Quantity }).ToList());
+            //    var body = Encoding.UTF8.GetBytes(message);
+
+            //    channel.BasicPublish(exchange: "",
+            //                         routingKey: "decreaseQuantityQueue",
+            //                         basicProperties: null,
+            //                         body: body);
+            //}
+
+            _userOrderService.CreateOrder(order);
             return Ok();
         }
 

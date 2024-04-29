@@ -10,6 +10,7 @@ namespace AuthService.Services
         public bool UpdateUser(User user);
         public bool ChangeUserPassword(UserSetPassword objUserSetPassword);
         User GetUser(int nUserId);
+        User GetUserByEmailId(string emailId);
         List<User> GetUserList();
     }
 }

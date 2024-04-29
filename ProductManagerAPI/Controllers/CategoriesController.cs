@@ -17,7 +17,6 @@ namespace ProductManagerAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Categories
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
@@ -25,7 +24,6 @@ namespace ProductManagerAPI.Controllers
             return await _context.Category.ToListAsync();
         }
 
-        // GET: api/Categories/5
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<Category>> GetCategory(long id)
@@ -40,8 +38,6 @@ namespace ProductManagerAPI.Controllers
             return category;
         }
 
-        // PUT: api/Categories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> PutCategory(long id, Category category)
@@ -72,8 +68,6 @@ namespace ProductManagerAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Categories
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<Category>> PostCategory(Category category)
@@ -84,7 +78,6 @@ namespace ProductManagerAPI.Controllers
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
 
-        // DELETE: api/Categories/5
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteCategory(long id)
