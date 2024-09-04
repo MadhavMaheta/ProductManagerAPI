@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using OrderService.EFCore;
 using OrderService.Services;
 using System.Text;
+using EventBus.MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,8 @@ builder.Services.AddAuthentication(x =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenAuthentication:SecretKey"]))
     };
 });
+
+//builder.Services.AddMessageBroker(builder.Configuration);
 
 var app = builder.Build();
 

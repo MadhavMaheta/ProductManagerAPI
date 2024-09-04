@@ -38,9 +38,9 @@ namespace AuthService.Services
             {
                 return _context.User.FirstOrDefault(x => x.Email == emailId);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-                throw ex; 
+                throw ex;
             }
         }
 

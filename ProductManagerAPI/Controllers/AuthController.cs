@@ -20,7 +20,7 @@ namespace ProductManagerAPI.Controllers
             _configuration = config;
             _context = context;
         }
-
+        
         [HttpPost]
         public ActionResult<Token> Login(User user)
         {

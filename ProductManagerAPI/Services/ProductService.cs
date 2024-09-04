@@ -20,5 +20,10 @@ namespace ProductManagerAPI.Services
         {
             return _context.Product.ToList();
         }
+
+        public List<Product> GetFilteredProducts(Filter filter)
+        {
+            return _context.Product.Where(x=> filter.categories.Count > 0 ? filter.categories.Any(y => y == x.CategoryId) : true).ToList();
+        }
     }
 }

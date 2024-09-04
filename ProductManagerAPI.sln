@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService", "OrderServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{C47D1572-D6EB-4A22-A9F2-B2872DC18B0D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Test", "Auth.Test\Auth.Test.csproj", "{11AB8A2C-C9CA-44B1-88B4-CEBDA0802807}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus", "EventBus\EventBus.csproj", "{C04849DA-BFAC-4EC7-BF44-D3DDC2B368B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{C47D1572-D6EB-4A22-A9F2-B2872DC18B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C47D1572-D6EB-4A22-A9F2-B2872DC18B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C47D1572-D6EB-4A22-A9F2-B2872DC18B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11AB8A2C-C9CA-44B1-88B4-CEBDA0802807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11AB8A2C-C9CA-44B1-88B4-CEBDA0802807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11AB8A2C-C9CA-44B1-88B4-CEBDA0802807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11AB8A2C-C9CA-44B1-88B4-CEBDA0802807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C04849DA-BFAC-4EC7-BF44-D3DDC2B368B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C04849DA-BFAC-4EC7-BF44-D3DDC2B368B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C04849DA-BFAC-4EC7-BF44-D3DDC2B368B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C04849DA-BFAC-4EC7-BF44-D3DDC2B368B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

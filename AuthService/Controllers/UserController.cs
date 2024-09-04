@@ -15,7 +15,7 @@ namespace AuthService.Controllers
 
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IConfiguration config, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
@@ -28,7 +28,7 @@ namespace AuthService.Controllers
 
             if (ModelState.IsValid)
             {
-                if(_userService.GetUserByEmailId(objUser.Email) != null)
+                if (_userService.GetUserByEmailId(objUser.Email) != null)
                     return BadRequest("User with same email already exist");
 
                 if (_userService.RegisterUser(objUser))

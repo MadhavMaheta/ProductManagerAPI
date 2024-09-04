@@ -29,7 +29,7 @@ namespace AuthService.Controllers
             User userAvailable = _userService.GetUser(user.Username, user.Password);
 
             if (userAvailable == null || userAvailable.Id == 0) { return Unauthorized(); }
-            
+
             user.id = userAvailable.Id;
             user.Username = userAvailable.Name;
             user.Password = userAvailable.Password;

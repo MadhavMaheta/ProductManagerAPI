@@ -33,6 +33,13 @@ namespace ProductManagerAPI.Controllers
             return _productService.GetProducts();
         }
 
+        [HttpPost]
+        [Helper.Authorize("Admin")]
+        public List<Product> GetProductList(Filter filter)
+        {
+            return _productService.GetFilteredProducts(filter);
+        }
+
         [HttpGet]
         public List<Product> GetHomePageProducts()
         {
