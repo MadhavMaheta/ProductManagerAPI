@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 using OrderService.EFCore;
 using OrderService.Services;
 using System.Text;
-using EventBus.MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
